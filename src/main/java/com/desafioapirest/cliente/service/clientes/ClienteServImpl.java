@@ -1,10 +1,12 @@
 package com.desafioapirest.cliente.service.clientes;
 
+import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.dto.ClientesDTO;
 import com.desafioapirest.cliente.repository.ClientesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.events.Event;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -60,8 +62,8 @@ public class ClienteServImpl implements ClienteService{
         for(int i =0;i<clientescopia.size();i++){
             if(clientescopia.get(i).getDni().equals(dni)){
                 elementocliente=clientescopia.get(i);
-                edad = calcularEdad(elementocliente);
-                amostrar= new ClientesDTO(elementocliente.getIdcliente(),elementocliente.getDni(), elementocliente.getNombre(), elementocliente.getApellido(), edad);
+                edad = calcularEdad(elementocliente); // LLamo a mi metodo para calcular la edad
+                amostrar= new ClientesDTO(elementocliente.getIdcliente(),elementocliente.getDni(), elementocliente.getNombre(), elementocliente.getApellido(), edad); //construyo mi Cliente a mostrar
                 return amostrar;
             }
         }
@@ -77,7 +79,7 @@ public class ClienteServImpl implements ClienteService{
     public ClientesDTO mostrarEdadByID(Integer idcliente) {
         elementocliente=clientesRepository.findById(idcliente).orElse(null); //utilizo el repository para buscar por dni
         if(elementocliente==null){
-            return null;
+            return null;  //Si no encuentra al cliente, voy a devolver un vacio
         }
         edad=calcularEdad(elementocliente); // utilizo el metodo para calcular la edad
         amostrar= new ClientesDTO(elementocliente.getIdcliente(), elementocliente.getDni(), elementocliente.getNombre(), elementocliente.getApellido(), edad); // Creo un objeto tipo CLIENTEDTO para mostrar
@@ -89,24 +91,25 @@ public class ClienteServImpl implements ClienteService{
     //*********************************************************************************************************************
 
     public ClientesDTO nuevoCliente(Clientes cliente) {
-        boolean dniRepetido = buscarDniRepetido(cliente);
+        boolean dniRepetido = buscarDniRepetido(cliente); //Con este metodo voy a chequear que el cliente a crear no tenga un DNI repetido a alguno ya existente
         if(dniRepetido){
             return null;
         }else {
-            int id = calcularID();
-            cliente.setIdcliente(id);
-            clientesRepository.save(cliente);
-            edad = calcularEdad(cliente);
-            amostrar = new ClientesDTO(id, cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
+            int id = calcularID(); // Calculo el id, no importa el parametro q me pase el usuario, para evitar problemas lo defino desde el programa
+            cliente.setIdcliente(id); // Una vez calculado defino ese id  en el cliente.
+            clientesRepository.save(cliente); // Grabo el cliente nuevo
+            edad = calcularEdad(cliente); // calculo la edad
+            amostrar = new ClientesDTO(id, cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad); //Muestro el cliente recien creado y su edad
             return (amostrar);
         }
     }
 
     @Override
-    public ClientesDTO actualizarCliente(Clientes cliente) {
-        int idfinal = clientesRepository.findAll().size();
-        if(cliente.getIdcliente()<=idfinal && cliente.getIdcliente()>0){
-            clientesRepository.save(cliente);
+    public ClientesDTO actualizarCliente(Clientes cliente){
+        clientescopia = clientesRepository.findAll();
+        finalLista = clientescopia.size();
+        if(cliente.getIdcliente()<=finalLista && cliente.getIdcliente()>0){  //Si el IDCliente existe en la base de datos , entonces entro a la segunda verificacion para actualizar;
+               clientesRepository.save(cliente);
             edad=calcularEdad(cliente);
             amostrar = new ClientesDTO(cliente.getIdcliente(), cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
           return amostrar;
@@ -128,7 +131,7 @@ public class ClienteServImpl implements ClienteService{
         return edad;
     }
 
-    private boolean buscarDniRepetido(Clientes cliente){
+    private boolean buscarDniRepetido(Clientes cliente){  //Este metodo chequea que el DNI no se encuentre en la base de datos, si lo encuentra devuelve el ID del cliente con ese dni. Si el dni no se repite me devuelve 0
         clientescopia=clientesRepository.findAll();
         for(int i=0;i<clientescopia.size();i++){
             elementocliente=clientescopia.get(i);

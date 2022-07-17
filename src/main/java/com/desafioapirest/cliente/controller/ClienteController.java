@@ -30,7 +30,7 @@ public class ClienteController {
                 "\n[localhost:8080/clientes/idedad/{id} : Reemplace el texto{id} por el id a buscar, de existir vera ese cliente con su edad ";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all") //Mapeo, y agrego un endpoint para el siguiente metodo
     public List<Clientes> mostrarTodos(){
         return clienteService.mostrarTodos();
     }
@@ -40,8 +40,8 @@ public class ClienteController {
         return clienteService.mostrarClientesEdad();
     }
 
-    @GetMapping("/dni/{dni}")
-    public ResponseEntity<Object> mostrarbyDNI( @PathVariable int dni) throws Exception {
+    @GetMapping("/dni/{dni}")//Mapeo, y agrego un endpoint para el siguiente metodo
+    public ResponseEntity<Object> mostrarbyDNI( @PathVariable int dni) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         ClientesDTO cliente = clienteService.mostrarByDNI(dni);
         if(cliente==null){
             throw new ApiException("No se encuentra el DNI : "+dni);
@@ -50,7 +50,7 @@ public class ClienteController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Object> mostrarOriginalByID( @PathVariable int id) throws Exception {
+    public ResponseEntity<Object> mostrarOriginalByID( @PathVariable int id) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         Clientes cliente = clienteService.mostrarOriginalByID(id);
         if(cliente==null){
             throw new ApiException("No se encontro ningun cliente con el ID :"+id);
@@ -60,7 +60,7 @@ public class ClienteController {
     }
 
     @GetMapping("/idedad/{id}")
-    public ResponseEntity<Object> mostrarEdadByID(@PathVariable int id) throws Exception {
+    public ResponseEntity<Object> mostrarEdadByID(@PathVariable int id) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         ClientesDTO cliente = clienteService.mostrarEdadByID(id);
         if(cliente==null){
             throw new ApiException("No se encontro ningun cliente con el ID :"+id);
@@ -84,13 +84,21 @@ public class ClienteController {
     }
 
     @PostMapping("/crear")
-    public ClientesDTO nuevoCliente(@RequestBody Clientes cliente)  {
-        return clienteService.nuevoCliente(cliente);
+    public ResponseEntity<Object> nuevoCliente(@RequestBody Clientes cliente) throws Exception  {
+        ClientesDTO nuevoCliente= clienteService.nuevoCliente(cliente);
+        if(nuevoCliente==null){
+            throw new ApiException("No se puede crear el Cliente, ya que ese DNI se encuentra en nuestra base de datos");
+        }
+        return new ResponseEntity<>(nuevoCliente,HttpStatus.OK);
     }
 
     @PostMapping("/actualizar")
-    public ClientesDTO actualizarCliente(@RequestBody Clientes cliente) {
-        return clienteService.actualizarCliente(cliente);
+    public ResponseEntity<Object> actualizarCliente(@RequestBody Clientes cliente) throws ApiException {
+        ClientesDTO nuevoCliente = clienteService.actualizarCliente(cliente);
+        if(nuevoCliente==null){
+            throw new ApiException("El ID de Cliente no existe");
+        }
+        return new ResponseEntity<>(nuevoCliente,HttpStatus.OK);
     }
 
 }

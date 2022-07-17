@@ -108,8 +108,8 @@ public class ClienteServImpl implements ClienteService{
     public ClientesDTO actualizarCliente(Clientes cliente){
         clientescopia = clientesRepository.findAll();
         finalLista = clientescopia.size();
-        if(cliente.getIdcliente()<=finalLista && cliente.getIdcliente()>0){  //Si el IDCliente existe en la base de datos , entonces entro a la segunda verificacion para actualizar;
-               clientesRepository.save(cliente);
+        if(cliente.getIdcliente()<=finalLista && cliente.getIdcliente()>0){  //Si el IDCliente existe en la base de datos , entonces puedo actualizar;
+            clientesRepository.save(cliente);
             edad=calcularEdad(cliente);
             amostrar = new ClientesDTO(cliente.getIdcliente(), cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
           return amostrar;

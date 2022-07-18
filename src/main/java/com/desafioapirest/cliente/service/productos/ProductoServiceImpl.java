@@ -81,6 +81,7 @@ public class ProductoServiceImpl implements ProductoService{
     public Productos actualizarProducto(Productos producto) {
         int idfinal = productoRepository.findAll().size();
         if(producto.getIdproducto()<=idfinal && producto.getIdproducto()>0){
+            producto.setCodigo(producto.getCodigo().toUpperCase());
             productoRepository.save(producto);
             return producto;
         }
@@ -94,8 +95,8 @@ public class ProductoServiceImpl implements ProductoService{
     private boolean buscarCodigoRepetido(Productos producto){
         productoscopia=productoRepository.findAll();
         for(int i=0;i<productoscopia.size();i++){
-            if(productoscopia.get(i).getCodigo().equals(producto.getCodigo())) {
-                return true;
+            if(productoscopia.get(i).getCodigo().equalsIgnoreCase(producto.getCodigo())) {
+            return true;
             }
         }
         return false;

@@ -2,7 +2,6 @@ package com.desafioapirest.cliente.controller;
 
 import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Productos;
-import com.desafioapirest.cliente.service.clientes.ClienteService;
 import com.desafioapirest.cliente.service.productos.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ public class ProductoController {
         return "BIENVENIDO AL SISTEMA GET DE PRODUCTOS \n" +
                 "*********************************************\n" +
                 "Uri's y sus funciones:\n" +
-                "\n[localhost:8080/productos/all/ : Podrá consultar todos los clientes\n" +
+                "\n[localhost:8080/productos/all/ : Podrá consultar todos los productos\n" +
                 "\n[localhost:8080/productos/codigo/{codigo} : Reemplace el texto {codigo}, por el codigo a buscar, de existir lo verá en pantalla\n" +
                 "\n[localhost:8080/productos/id/{id} : Reemplace el texto {id}, por el id a buscar, de existir lo verá en pantalla\n" +
                 "\n[localhost:8080/productos/buscar/{descripcion} : Reemplace el texto {descripcion}, por el producto a buscar. Devuelve una lista de todos los productos que contengan ese texto\n" ;
@@ -68,7 +67,7 @@ public class ProductoController {
     //*********************************************************************************************************************
 
 
-    @PostMapping("productos") //Mapeo como para dar instrucciones de lo que puede devolver este programita
+    @PostMapping("") //Mapeo como para dar instrucciones de lo que puede devolver este programita
     public String infoPostProductos(){
         return "BIENVENIDO AL SISTEMA DE ABM DE PRODUCTOS \n" +
                 "*********************************************\n" +
@@ -87,7 +86,7 @@ public class ProductoController {
     }
 
     @PostMapping("/actualizar")
-    public ResponseEntity<Productos> actualizarProducto(@RequestBody Productos producto) throws Exception{
+    public ResponseEntity<Object> actualizarProducto(@RequestBody Productos producto) throws ApiException {
         producto= productoService.actualizarProducto(producto);
         if(producto==null){
             throw new ApiException("El ID de Producto no existe");

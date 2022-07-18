@@ -14,7 +14,7 @@
 	<name>cliente</name>
 	<description>Desafio API Rest Cliente</description>
 	<properties>
-		<java.version>18</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

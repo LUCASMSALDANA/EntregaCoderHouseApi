@@ -17,3 +17,8 @@ values
 ('Bajo Gibson Kramer Striker 422s' ,102000,2,'EBG101'),
 ('Bajo Gibson Flying V Bass' ,762000,1,'EBG102'),
 ('Bajo Gibson Eb4 Satin Vintage SunBurst' ,762000,1,'EBG103');
+
+INSERT INTO COMPROBANTE(IDCLIENTE,CANTIDAD,FECHA,TOTAL)
+values
+(4,1,'2022-6-18',30000),
+(2,2,'2022-7-05',60000);

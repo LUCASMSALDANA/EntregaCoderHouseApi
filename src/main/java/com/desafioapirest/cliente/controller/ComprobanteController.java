@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("comprobantes")
 public class ComprobanteController {
-
+    //    localhost:8080/comprabantes
     @Autowired
     ComprobanteService comprobanteService;
 
@@ -43,36 +43,5 @@ public class ComprobanteController {
     }
 
 
-    //*********************************************************************************************************************
-    //*********************************             POST MAPPINGS                   ***************************************
-    //*********************************************************************************************************************
-
-
-    @PostMapping("") //Mapeo como para dar instrucciones de lo que puede devolver este programita
-    public String infoPostComprobantes(){
-        return "BIENVENIDO AL SISTEMA DE ABM DE COMPROBANTES \n" +
-                "*********************************************\n" +
-                "Uri's y sus funciones:\n" +
-                "\n[localhost:8080/comprobantes/crear] : Podrá crear un Producto nuevo\n" +
-                "\n[localhost:8080/comprobantes/actualizar : Podrá actualizar un Producto";
-    }
-
-    @PostMapping("/crear")
-    public ResponseEntity<Object> nuevoProducto(@RequestBody Comprobante comprobante) throws Exception {
-        comprobante= comprobanteService.nuevoProducto(comprobante);
-        if(comprobante==null){
-            throw new ApiException("El codigo de su comp pertenece a otro ya presente en nuestra base de datos");
-        }
-        return new ResponseEntity<>(comprobante,HttpStatus.OK);
-    }
-
-    @PostMapping("/actualizar")
-    public ResponseEntity<Object> actualizarProducto(@RequestBody Comprobante comprobante) throws ApiException {
-        comprobante= comprobanteService.actualizarProducto(comprobante);
-        if(comprobante==null){
-            throw new ApiException("El ID del Comprobante no existe");
-        }
-        return new ResponseEntity<>(comprobante,HttpStatus.OK);
-    }
 
 }

@@ -7,5 +7,5 @@ import java.util.List;
 public interface VentaService {
     List<Venta> mostrarTodos();
 
-    Venta mostrarByID(int id);
+    Venta mostrarByID(int id) throws Exception;
 }

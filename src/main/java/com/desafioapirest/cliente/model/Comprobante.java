@@ -16,6 +16,15 @@ public class Comprobante {
     @Column(name = "IDCLIENTE")
     private Integer idcliente;
 
+    @Column(name = "NOMBREAPELLIDO")
+    private String nombreapellido;
+
+    @Column(name ="IDPRODUCTO")
+    private Integer idproducto;
+
+    @Column(name="DESCRIPCION")
+    private String descripcion;
+
     @Column(name="CANTIDAD")
     private Integer cantidad;
 
@@ -32,9 +41,12 @@ public class Comprobante {
     public Comprobante() {
     }
 
-    public Comprobante(Integer idcomprobante, Integer idcliente, Integer cantidad, Date fecha, Integer total) {
+    public Comprobante(Integer idcomprobante, Integer idcliente, String nombreapellido, Integer idproducto, String descripcion, Integer cantidad, Date fecha, Integer total) {
         this.idcomprobante = idcomprobante;
         this.idcliente = idcliente;
+        this.nombreapellido = nombreapellido;
+        this.idproducto = idproducto;
+        this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.total = total;
@@ -59,6 +71,30 @@ public class Comprobante {
 
     public void setIdcliente(Integer idcliente) {
         this.idcliente = idcliente;
+    }
+
+    public String getNombreapellido() {
+        return nombreapellido;
+    }
+
+    public void setNombreapellido(String nombreapellido) {
+        this.nombreapellido = nombreapellido;
+    }
+
+    public Integer getIdproducto() {
+        return idproducto;
+    }
+
+    public void setIdproducto(Integer idproducto) {
+        this.idproducto = idproducto;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Integer getCantidad() {

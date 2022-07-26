@@ -14,19 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("linea")
+@RequestMapping("ventas")
 public class VentaController {
-
+        //   localshost:8080/ventas
     @Autowired
     VentaService ventaService;
 
     @GetMapping("")
     public String infoGetLinea(){
-        return "BIENVENIDO AL SISTEMA DE GET DE LINEA \n" +
+        return "BIENVENIDO AL SISTEMA DE VENTAS \n" +
                 "*********************************************\n" +
                 "Uri's y sus funciones:\n" +
-                "\n[localhost:8080/linea/all/ : Podrá consultar todos las lineas\n" +
-                "\n[localhost:8080/linea/id/{id} : Reemplace el texto {id}, por el id a buscar, de existir lo verá en pantalla\n" ;
+                "\n[localhost:8080/ventas/all/ : Podrá consultar por las ventas realizadas \n" +
+                "\n[localhost:8080/ventas/id/{id} : Reemplace el texto {id}, por el id a buscar, de existir lo verá en pantalla\n"+
+                "\n\n*** IMPORTANTE ***"+
+                "\nLos unicos requisitos para crear una venta es pasar el ID Cliente, el ID producto, y la cantidad de productos.";
     }
 
     @GetMapping("/all")
@@ -38,9 +40,6 @@ public class VentaController {
     @GetMapping("/id/{id}")
     public ResponseEntity<Object> mostrarOriginalByID(@PathVariable int id) throws Exception{ // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         Venta venta = ventaService.mostrarByID(id);
-        if(venta ==null){
-            throw new ApiException("No se encontro ninguna linea con el ID : "+id);
-        }
         return new ResponseEntity<>(venta, HttpStatus.OK);
     }
 }

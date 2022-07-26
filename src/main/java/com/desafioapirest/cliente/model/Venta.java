@@ -12,20 +12,21 @@ public class Venta {
     @Column(name = "IDVENTA")
     private Integer idventa;
 
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
+    @Column(name = "IDPRODUCTO")
+    private Integer idproducto;
 
     @Column(name = "CANTIDAD")
     private int cantidad;
 
-    @Column(name = "PRECIO")
-    private Float precio;
+    @Column(name = "PRECIOTOTAL")
+    private Float preciototal;
+
+    @Column(name = "IDCLIENTE")
+    private int idcliente;
 
     @Column(name = "IDCOMPROBANTE")
     private Integer idcomprobante;
 
-    @Column(name = "IDPRODUCTO")
-    private Integer idproducto;
 
     //*********************
     //*   Constructores   *
@@ -35,14 +36,15 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Integer idventa, String descripcion, int cantidad, Float precio, Integer idcomprobante, Integer idproducto) {
+    public Venta(Integer idventa, Integer idproducto, int cantidad, Float preciototal, int idcliente, Integer idcomprobante) {
         this.idventa = idventa;
-        this.descripcion = descripcion;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.idcomprobante = idcomprobante;
         this.idproducto = idproducto;
+        this.cantidad = cantidad;
+        this.preciototal = preciototal;
+        this.idcliente = idcliente;
+        this.idcomprobante = idcomprobante;
     }
+
     //*********************
     //*Getters and Setters*
     //*********************
@@ -52,16 +54,16 @@ public class Venta {
         return idventa;
     }
 
-    public void setIdventa(Integer idlinea) {
+    public void setIdventa(Integer idventa) {
         this.idventa = idventa;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public Integer getIdproducto() {
+        return idproducto;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIdproducto(Integer idproducto) {
+        this.idproducto = idproducto;
     }
 
     public int getCantidad() {
@@ -72,12 +74,20 @@ public class Venta {
         this.cantidad = cantidad;
     }
 
-    public Float getPrecio() {
-        return precio;
+    public Float getPreciototal() {
+        return preciototal;
     }
 
-    public void setPrecio(Float precio) {
-        this.precio = precio;
+    public void setPreciototal(Float preciototal) {
+        this.preciototal = preciototal;
+    }
+
+    public int getIdcliente() {
+        return idcliente;
+    }
+
+    public void setIdcliente(int idcliente) {
+        this.idcliente = idcliente;
     }
 
     public Integer getIdcomprobante() {
@@ -87,15 +97,4 @@ public class Venta {
     public void setIdcomprobante(Integer idcomprobante) {
         this.idcomprobante = idcomprobante;
     }
-
-    public Integer getIdproducto() {
-        return idproducto;
-    }
-
-    public void setIdproducto(Integer idproducto) {
-        this.idproducto = idproducto;
-    }
 }
-
-
-

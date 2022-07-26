@@ -7,9 +7,5 @@ import java.util.List;
 public interface ComprobanteService {
     List<Comprobante> mostrarTodos();
 
-    Comprobante mostrarByID(int id);
-
-    Comprobante nuevoProducto(Comprobante comprobante);
-
-    Comprobante actualizarProducto(Comprobante comprobante);
-}
+    Comprobante mostrarByID(int id) throws Exception;
+    }

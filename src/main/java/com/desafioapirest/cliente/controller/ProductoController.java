@@ -37,27 +37,18 @@ public class ProductoController {
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<Object> mostrarByDCODIGO( @PathVariable String codigo) throws Exception{ // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         Productos producto= productoService.mostrarByCODIGO(codigo);
-        if(producto==null){
-            throw new ApiException("No se encontro ningun producto con el Codigo "+codigo);
-        }
         return new ResponseEntity<>(producto, HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Object> mostrarOriginalByID( @PathVariable int id) throws Exception{ // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         Productos producto= productoService.mostrarByID(id);
-        if(producto==null){
-            throw new ApiException("No se encontro ningun producto con el ID :"+id);
-        }
         return new ResponseEntity<>(producto, HttpStatus.OK);
     }
 
     @GetMapping("buscar/{descripcion}")
     public ResponseEntity<Object> buscarProductos(@PathVariable String descripcion) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         List<Productos> producto= productoService.buscarProductos(descripcion);
-        if(producto.isEmpty()){
-            throw new ApiException("No se encontro ningun producto con una descripcion que contenga :"+descripcion);
-        }
         return new ResponseEntity<>(producto, HttpStatus.OK);
     }
 
@@ -79,18 +70,12 @@ public class ProductoController {
     @PostMapping("/crear")
     public ResponseEntity<Object> nuevoProducto(@RequestBody Productos producto) throws Exception {
         producto= productoService.nuevoProducto(producto);
-        if(producto==null){
-            throw new ApiException("El codigo de su producto pertenece a otro ya presente en nuestra base de datos");
-        }
         return new ResponseEntity<>(producto,HttpStatus.OK);
     }
 
     @PostMapping("/actualizar")
-    public ResponseEntity<Object> actualizarProducto(@RequestBody Productos producto) throws ApiException {
+    public ResponseEntity<Object> actualizarProducto(@RequestBody Productos producto) throws Exception {
         producto= productoService.actualizarProducto(producto);
-        if(producto==null){
-            throw new ApiException("El ID de Producto no existe");
-        }
         return new ResponseEntity<>(producto,HttpStatus.OK);
     }
 

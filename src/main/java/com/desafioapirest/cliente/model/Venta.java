@@ -6,11 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Linea")
-public class Linea {
+@Table(name="VENTA")
+public class Venta {
     @Id
-    @Column(name = "IDLINEA")
-    private Integer idlinea;
+    @Column(name = "IDVENTA")
+    private Integer idventa;
 
     @Column(name = "DESCRIPCION")
     private String descripcion;
@@ -32,11 +32,11 @@ public class Linea {
     //*********************
 
 
-    public Linea() {
+    public Venta() {
     }
 
-    public Linea(Integer idlinea, String descripcion, int cantidad, Float precio, Integer idcomprobante, Integer idproducto) {
-        this.idlinea = idlinea;
+    public Venta(Integer idventa, String descripcion, int cantidad, Float precio, Integer idcomprobante, Integer idproducto) {
+        this.idventa = idventa;
         this.descripcion = descripcion;
         this.cantidad = cantidad;
         this.precio = precio;
@@ -48,12 +48,12 @@ public class Linea {
     //*********************
 
 
-    public Integer getIdlinea() {
-        return idlinea;
+    public Integer getIdventa() {
+        return idventa;
     }
 
-    public void setIdlinea(Integer idlinea) {
-        this.idlinea = idlinea;
+    public void setIdventa(Integer idlinea) {
+        this.idventa = idventa;
     }
 
     public String getDescripcion() {

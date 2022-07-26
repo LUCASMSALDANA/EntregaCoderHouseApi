@@ -1,9 +1,8 @@
 package com.desafioapirest.cliente.controller;
 
 import com.desafioapirest.cliente.exception.ApiException;
-import com.desafioapirest.cliente.model.Comprobante;
-import com.desafioapirest.cliente.model.Linea;
-import com.desafioapirest.cliente.service.linea.LineaService;
+import com.desafioapirest.cliente.model.Venta;
+import com.desafioapirest.cliente.service.venta.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("linea")
-public class LineaController {
+public class VentaController {
 
     @Autowired
-    LineaService lineaService;
+    VentaService ventaService;
 
     @GetMapping("")
     public String infoGetLinea(){
@@ -31,17 +30,17 @@ public class LineaController {
     }
 
     @GetMapping("/all")
-    public List<Linea> mostrarTodos(){
-        return lineaService.mostrarTodos();
+    public List<Venta> mostrarTodos(){
+        return ventaService.mostrarTodos();
     }
 
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Object> mostrarOriginalByID(@PathVariable int id) throws Exception{ // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
-        Linea linea= lineaService.mostrarByID(id);
-        if(linea==null){
+        Venta venta = ventaService.mostrarByID(id);
+        if(venta ==null){
             throw new ApiException("No se encontro ninguna linea con el ID : "+id);
         }
-        return new ResponseEntity<>(linea, HttpStatus.OK);
+        return new ResponseEntity<>(venta, HttpStatus.OK);
     }
 }

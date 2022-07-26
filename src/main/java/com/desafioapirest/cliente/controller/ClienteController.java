@@ -43,28 +43,19 @@ public class ClienteController {
     @GetMapping("/dni/{dni}")//Mapeo, y agrego un endpoint para el siguiente metodo
     public ResponseEntity<Object> mostrarbyDNI( @PathVariable int dni) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         ClientesDTO cliente = clienteService.mostrarByDNI(dni);
-        if(cliente==null){
-            throw new ApiException("No se encuentra el DNI : "+dni);
-        }
         return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Object> mostrarOriginalByID( @PathVariable int id) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         Clientes cliente = clienteService.mostrarOriginalByID(id);
-        if(cliente==null){
-            throw new ApiException("No se encontro ningun cliente con el ID :"+id);
-        }else{
             return new ResponseEntity<>(cliente,HttpStatus.OK);
-        }
+
     }
 
     @GetMapping("/idedad/{id}")
     public ResponseEntity<Object> mostrarEdadByID(@PathVariable int id) throws Exception { // Para devolver un mensaje personalizado uso el ResponseEntity que devuelve un objeto, y este metodo ademas puede hacer un throw Exception
         ClientesDTO cliente = clienteService.mostrarEdadByID(id);
-        if(cliente==null){
-            throw new ApiException("No se encontro ningun cliente con el ID :"+id);
-        }
         return new ResponseEntity<>(cliente,HttpStatus.OK);
     }
 
@@ -74,7 +65,7 @@ public class ClienteController {
  //*********************************************************************************************************************
 
 
-    @PostMapping("clientes") //Mapeo como para dar instrucciones de lo que puede devolver este programita
+    @PostMapping("") //Mapeo como para dar instrucciones de lo que puede devolver este programita
     public String infoPostClientes(){
         return "BIENVENIDO AL SISTEMA DE ABM DE CLIENTES \n" +
                 "*********************************************\n" +
@@ -86,18 +77,12 @@ public class ClienteController {
     @PostMapping("/crear")
     public ResponseEntity<Object> nuevoCliente(@RequestBody Clientes cliente) throws Exception  {
         ClientesDTO nuevoCliente= clienteService.nuevoCliente(cliente);
-        if(nuevoCliente==null){
-            throw new ApiException("No se puede crear el Cliente, ya que ese DNI se encuentra en nuestra base de datos");
-        }
         return new ResponseEntity<>(nuevoCliente,HttpStatus.OK);
     }
 
     @PostMapping("/actualizar")
-    public ResponseEntity<Object> actualizarCliente(@RequestBody Clientes cliente) throws ApiException {
+    public ResponseEntity<Object> actualizarCliente(@RequestBody Clientes cliente) throws Exception {
         ClientesDTO nuevoCliente = clienteService.actualizarCliente(cliente);
-        if(nuevoCliente==null){
-            throw new ApiException("El ID de Cliente no existe");
-        }
         return new ResponseEntity<>(nuevoCliente,HttpStatus.OK);
     }
 

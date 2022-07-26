@@ -57,7 +57,7 @@ public class ClienteServImpl implements ClienteService{
     }
 
     @Override
-    public ClientesDTO mostrarByDNI(int dni) {
+    public ClientesDTO mostrarByDNI(int dni) throws Exception{
         clientescopia=clientesRepository.findAll();
         for(int i =0;i<clientescopia.size();i++){
             if(clientescopia.get(i).getDni().equals(dni)){
@@ -67,19 +67,21 @@ public class ClienteServImpl implements ClienteService{
                 return amostrar;
             }
         }
-        return null;
+        throw new ApiException("No se encuentra el DNI : "+dni);
     }
 
     @Override
-    public Clientes mostrarOriginalByID(Integer idcliente) {
-        return clientesRepository.findById(idcliente).orElse(null);
+    public Clientes mostrarOriginalByID(Integer idcliente) throws Exception {
+        elementocliente= clientesRepository.findById(idcliente).orElse(null);
+        if(elementocliente==null){throw new ApiException("No se encontro ningun cliente con el ID :"+idcliente);}
+        return elementocliente;
     }
 
     @Override
-    public ClientesDTO mostrarEdadByID(Integer idcliente) {
+    public ClientesDTO mostrarEdadByID(Integer idcliente) throws Exception {
         elementocliente=clientesRepository.findById(idcliente).orElse(null); //utilizo el repository para buscar por dni
         if(elementocliente==null){
-            return null;  //Si no encuentra al cliente, voy a devolver un vacio
+            throw new ApiException("No se encontro ningun cliente con el ID :"+idcliente);
         }
         edad=calcularEdad(elementocliente); // utilizo el metodo para calcular la edad
         amostrar= new ClientesDTO(elementocliente.getIdcliente(), elementocliente.getDni(), elementocliente.getNombre(), elementocliente.getApellido(), edad); // Creo un objeto tipo CLIENTEDTO para mostrar
@@ -90,10 +92,10 @@ public class ClienteServImpl implements ClienteService{
     //*********************************             POST SERVICES                   ***************************************
     //*********************************************************************************************************************
 
-    public ClientesDTO nuevoCliente(Clientes cliente) {
+    public ClientesDTO nuevoCliente(Clientes cliente) throws Exception {
         boolean dniRepetido = buscarDniRepetido(cliente); //Con este metodo voy a chequear que el cliente a crear no tenga un DNI repetido a alguno ya existente
         if(dniRepetido){
-            return null;
+            throw new ApiException("No se puede crear el Cliente, ya que ese DNI se encuentra en nuestra base de datos");
         }else {
             int id = calcularID(); // Calculo el id, no importa el parametro q me pase el usuario, para evitar problemas lo defino desde el programa
             cliente.setIdcliente(id); // Una vez calculado defino ese id  en el cliente.
@@ -105,7 +107,7 @@ public class ClienteServImpl implements ClienteService{
     }
 
     @Override
-    public ClientesDTO actualizarCliente(Clientes cliente){
+    public ClientesDTO actualizarCliente(Clientes cliente) throws Exception{
         clientescopia = clientesRepository.findAll();
         finalLista = clientescopia.size();
         if(cliente.getIdcliente()<=finalLista && cliente.getIdcliente()>0){  //Si el IDCliente existe en la base de datos , entonces puedo actualizar;
@@ -114,7 +116,7 @@ public class ClienteServImpl implements ClienteService{
             amostrar = new ClientesDTO(cliente.getIdcliente(), cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
           return amostrar;
         }
-        return null;
+        throw new ApiException("El ID de Cliente no existe");
     }
 
 

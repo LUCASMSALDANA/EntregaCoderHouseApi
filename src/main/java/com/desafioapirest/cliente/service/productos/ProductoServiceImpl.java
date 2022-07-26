@@ -1,6 +1,7 @@
 package com.desafioapirest.cliente.service.productos;
 
 import com.desafioapirest.cliente.dto.ClientesDTO;
+import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.model.Productos;
 import com.desafioapirest.cliente.repository.ProductoRepository;
@@ -30,7 +31,7 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public Productos mostrarByCODIGO(String codigo) {
+    public Productos mostrarByCODIGO(String codigo) throws Exception {
         productoscopia=productoRepository.findAll();
 
         for(int i =0;i<productoscopia.size();i++){
@@ -39,16 +40,18 @@ public class ProductoServiceImpl implements ProductoService{
                 return productoAMostrar;
             }
         }
-        return null;
+        throw new ApiException("No se encontro ningun producto con el Codigo "+codigo);
     }
 
     @Override
-    public Productos mostrarByID(int id) {
-        return productoRepository.findById(id).orElse(null);
+    public Productos mostrarByID(int id) throws Exception {
+        productoAMostrar= productoRepository.findById(id).orElse(null);
+        if(productoAMostrar==null){throw new ApiException("No se encontro ningun producto con el ID :"+id);}
+        return productoAMostrar;
     }
 
     @Override
-    public List<Productos> buscarProductos(String descripcion) {
+    public List<Productos> buscarProductos(String descripcion) throws Exception{
         List<Productos> listaproductosAMostrar = new ArrayList<>();
         productoscopia = productoRepository.findAll();
         for(int i =0;i<productoscopia.size();i++){
@@ -57,6 +60,7 @@ public class ProductoServiceImpl implements ProductoService{
                 listaproductosAMostrar.add(productoscopia.get(i));
             }
         }
+        if(listaproductosAMostrar.isEmpty()){throw new ApiException("No se encontro ningun producto con una descripcion que contenga :"+descripcion);}
         return listaproductosAMostrar;
     }
 
@@ -65,10 +69,10 @@ public class ProductoServiceImpl implements ProductoService{
     //*********************************************************************************************************************
 
     @Override
-    public Productos nuevoProducto(Productos producto) {
+    public Productos nuevoProducto(Productos producto) throws Exception {
         boolean codigoRepetido = buscarCodigoRepetido(producto);
         if(codigoRepetido){
-            return null;
+            throw new ApiException("El codigo de su producto pertenece a otro ya presente en nuestra base de datos");
         }else {
             int id = calcularID();
             producto.setIdproducto(id);
@@ -78,14 +82,14 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public Productos actualizarProducto(Productos producto) {
+    public Productos actualizarProducto(Productos producto) throws Exception {
         int idfinal = productoRepository.findAll().size();
         if(producto.getIdproducto()<=idfinal && producto.getIdproducto()>0){
             producto.setCodigo(producto.getCodigo().toUpperCase());
             productoRepository.save(producto);
             return producto;
         }
-        return null;
+        throw new ApiException("El ID de Producto no existe");
     }
 
     //*********************************************************************************************************************

@@ -1,5 +1,6 @@
 package com.desafioapirest.cliente.service.clientes;
 
+import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.dto.ClientesDTO;
 
@@ -17,10 +18,10 @@ public interface ClienteService {
     // Basicamente ClientesDTO es una copia de Clientes, solo que en Clientes guardo la fecha de nacimiento
     // mientras que en Cleintes DTO voy a guardar la edad luego de ejecutar cierta logica.
 
-    ClientesDTO mostrarByDNI(int dni); // Este metodo devuelve un cliente segun dni
-    Clientes mostrarOriginalByID(Integer idcliente);
-    ClientesDTO mostrarEdadByID(Integer idcliente);
+    ClientesDTO mostrarByDNI(int dni) throws Exception; // Este metodo devuelve un cliente segun dni
+    Clientes mostrarOriginalByID(Integer idcliente) throws Exception;
+    ClientesDTO mostrarEdadByID(Integer idcliente) throws Exception;
 
-    ClientesDTO nuevoCliente(Clientes cliente);
-    ClientesDTO actualizarCliente(Clientes cliente) ;
+    ClientesDTO nuevoCliente(Clientes cliente) throws ApiException, Exception;
+    ClientesDTO actualizarCliente(Clientes cliente) throws Exception;
 }

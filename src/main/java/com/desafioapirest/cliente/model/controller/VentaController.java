@@ -1,4 +1,4 @@
-package com.desafioapirest.cliente.controller;
+package com.desafioapirest.cliente.model.controller;
 
 import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Venta;

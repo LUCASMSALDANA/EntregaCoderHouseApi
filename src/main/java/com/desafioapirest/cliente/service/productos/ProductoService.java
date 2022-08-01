@@ -13,4 +13,6 @@ public interface ProductoService {
     List<Productos> buscarProductos(String descripcion) throws Exception;
     Productos nuevoProducto(Productos producto) throws Exception;
     Productos actualizarProducto(Productos producto) throws Exception;
+
+    String borrarProducto(int id);
 }

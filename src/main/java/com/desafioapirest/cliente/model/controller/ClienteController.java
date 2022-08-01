@@ -1,14 +1,16 @@
-package com.desafioapirest.cliente.controller;
+package com.desafioapirest.cliente.model.controller;
 
 import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.dto.ClientesDTO;
 import com.desafioapirest.cliente.service.clientes.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.PayloadApplicationEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.StyledEditorKit;
 import java.util.List;
 
 @RestController    // Con esto le indico a SpringBoot q esta es mi clase Rest Controller
@@ -85,5 +87,10 @@ public class ClienteController {
         ClientesDTO nuevoCliente = clienteService.actualizarCliente(cliente);
         return new ResponseEntity<>(nuevoCliente,HttpStatus.OK);
     }
-
+    //localhost:8080/borar/{id}
+    @DeleteMapping("/borrar/{id}")
+    public String borrarCliente(@PathVariable int id){
+      String texto =clienteService.borrarCliente(id);
+      return texto;
+    }
 }

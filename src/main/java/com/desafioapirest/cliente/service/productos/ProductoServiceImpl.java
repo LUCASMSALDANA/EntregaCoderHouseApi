@@ -92,6 +92,21 @@ public class ProductoServiceImpl implements ProductoService{
         throw new ApiException("El ID de Producto no existe");
     }
 
+    @Override
+    public String borrarProducto(int id) {
+        productoscopia = productoRepository.findAll();
+        String texto = "No se encontró el Producto con el id: "+id+", por lo tanto no se puede eliminar";
+        if(id<1){return texto;}
+        for(int i=0;i<productoscopia.size();i++){
+            if(id==productoscopia.get(i).getIdproducto()) {
+                texto = "El producto: ["+productoscopia.get(i).getDescripcion()+"], con el id: "+id+" ha sido eliminado";
+                productoRepository.deleteById(id);
+                i=productoscopia.size();
+            }
+        }
+        return texto;
+    }
+
     //*********************************************************************************************************************
     //*********************************                  METODOS                    ***************************************
     //*********************************************************************************************************************

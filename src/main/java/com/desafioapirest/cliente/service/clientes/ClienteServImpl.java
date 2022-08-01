@@ -6,14 +6,12 @@ import com.desafioapirest.cliente.dto.ClientesDTO;
 import com.desafioapirest.cliente.repository.ClientesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.events.Event;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 //Esta clase implementará la interfaz service, y será la que tendra la lógica de cada metodo al que llamo
 //en mi capa Controller
@@ -117,6 +115,21 @@ public class ClienteServImpl implements ClienteService{
           return amostrar;
         }
         throw new ApiException("El ID de Cliente no existe");
+    }
+
+    @Override
+    public String borrarCliente(int id) {
+        clientescopia= clientesRepository.findAll();
+        String texto = "No se encontró el cliente con el id: "+id+", por lo tanto no se puede eliminar";
+        if(id<1){return texto;}
+        for(int i=0;i<clientescopia.size();i++){
+            if(id==clientescopia.get(i).getIdcliente()) {
+                clientesRepository.deleteById(id);
+                texto = "El cliente con el id: " + id + " ha sido eliminiado";
+                i=clientescopia.size();
+            }
+        }
+        return texto;
     }
 
 

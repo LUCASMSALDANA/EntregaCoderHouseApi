@@ -1,8 +1,6 @@
 package com.desafioapirest.cliente.service.productos;
 
-import com.desafioapirest.cliente.dto.ClientesDTO;
 import com.desafioapirest.cliente.exception.ApiException;
-import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.model.Productos;
 import com.desafioapirest.cliente.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,9 @@ public class ProductoServiceImpl implements ProductoService{
     Productos productoAMostrar = new Productos();
     String descripcionOriginal;
 
-    //*********************************************************************************************************************
-    //*********************************             REST SERVICES                   ***************************************
-    //*********************************************************************************************************************
+    //********************************************************************************************************************
+    //*********************************             GET SERVICES                   ***************************************
+    //********************************************************************************************************************
 
     @Override
     public List<Productos> mostrarTodos() {
@@ -92,17 +90,18 @@ public class ProductoServiceImpl implements ProductoService{
         throw new ApiException("El ID de Producto no existe");
     }
 
+    //*******************************************************************************************************************
+    //*******************************             DELETE SERVICES                   *************************************
+    //*******************************************************************************************************************
+
     @Override
     public String borrarProducto(int id) {
-        productoscopia = productoRepository.findAll();
         String texto = "No se encontró el Producto con el id: "+id+", por lo tanto no se puede eliminar";
         if(id<1){return texto;}
-        for(int i=0;i<productoscopia.size();i++){
-            if(id==productoscopia.get(i).getIdproducto()) {
-                texto = "El producto: ["+productoscopia.get(i).getDescripcion()+"], con el id: "+id+" ha sido eliminado";
-                productoRepository.deleteById(id);
-                i=productoscopia.size();
-            }
+        if(buscarIdProducto(id)){
+            productoAMostrar=productoRepository.findById(id).orElse(null);
+            texto = "El producto: ["+productoAMostrar.getDescripcion()+"], con el id: "+id+" ha sido eliminado";
+            productoRepository.deleteById(id);
         }
         return texto;
     }
@@ -110,6 +109,26 @@ public class ProductoServiceImpl implements ProductoService{
     //*********************************************************************************************************************
     //*********************************                  METODOS                    ***************************************
     //*********************************************************************************************************************
+
+    public boolean buscarIdProducto(int id){
+        productoscopia=productoRepository.findAll();
+        for(int i=0;i<productoscopia.size();i++){
+            if(productoscopia.get(i).getIdproducto()==id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public float VerifCantidad(Integer idproducto, int cantidad) throws Exception{
+        productoAMostrar = productoRepository.findById(idproducto).orElse(null);
+        if(productoAMostrar.getStock()>=cantidad){
+            return cantidad*productoAMostrar.getPrecio();
+        }
+        throw new ApiException("Stock Insuficiente para la compra. El stock del producto :"+productoAMostrar.getDescripcion()+" es de : "+productoAMostrar.getStock());
+    }
+
 
     private boolean buscarCodigoRepetido(Productos producto){
         productoscopia=productoRepository.findAll();

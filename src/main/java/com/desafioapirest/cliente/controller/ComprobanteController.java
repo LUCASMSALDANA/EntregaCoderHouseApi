@@ -1,8 +1,7 @@
-package com.desafioapirest.cliente.model.controller;
+package com.desafioapirest.cliente.controller;
 
 import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Comprobante;
-import com.desafioapirest.cliente.model.Productos;
 import com.desafioapirest.cliente.service.comprobantes.ComprobanteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +16,10 @@ public class ComprobanteController {
     //    localhost:8080/comprabantes
     @Autowired
     ComprobanteService comprobanteService;
+
+    //********************************************************************************************************************
+    //*********************************             GET MAPPINGS                   ***************************************
+    //********************************************************************************************************************
 
     @GetMapping("") //Mapeo como para dar instrucciones de lo que puede devolver este programita
     public String infoGetComprobantes(){

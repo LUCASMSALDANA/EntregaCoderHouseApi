@@ -117,6 +117,10 @@ public class ClienteServImpl implements ClienteService{
         throw new ApiException("El ID de Cliente no existe");
     }
 
+    //*******************************************************************************************************************
+    //*******************************             DELETE SERVICES                   *************************************
+    //*******************************************************************************************************************
+
     @Override
     public String borrarCliente(int id) {
         clientescopia= clientesRepository.findAll();
@@ -130,6 +134,17 @@ public class ClienteServImpl implements ClienteService{
             }
         }
         return texto;
+    }
+
+    @Override
+    public boolean buscarIDCliente(int idcliente) {
+        clientescopia=clientesRepository.findAll();
+        for(int i=0;i<clientescopia.size();i++){
+            if(clientescopia.get(i).getIdcliente()==idcliente) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

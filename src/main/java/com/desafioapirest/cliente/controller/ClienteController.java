@@ -1,16 +1,13 @@
-package com.desafioapirest.cliente.model.controller;
+package com.desafioapirest.cliente.controller;
 
-import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.dto.ClientesDTO;
 import com.desafioapirest.cliente.service.clientes.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.PayloadApplicationEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.List;
 
 @RestController    // Con esto le indico a SpringBoot q esta es mi clase Rest Controller
@@ -20,6 +17,9 @@ public class ClienteController {
     @Autowired  // Aqui inyecto lo que va a ser mi clase de Service (Es decir donde estará la lógica de cada metodo que llame)
     ClienteService clienteService;
 
+    //********************************************************************************************************************
+    //*********************************             GET MAPPINGS                   ***************************************
+    //********************************************************************************************************************
     @GetMapping("") //Mapeo como para dar instrucciones de lo que puede devolver este programita
     public String infoGetClientes(){
         return "BIENVENIDO AL SISTEMA GET DE CLIENTES \n" +

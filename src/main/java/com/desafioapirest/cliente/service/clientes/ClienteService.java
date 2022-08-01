@@ -25,4 +25,6 @@ public interface ClienteService {
     ClientesDTO nuevoCliente(Clientes cliente) throws ApiException, Exception;
     ClientesDTO actualizarCliente(Clientes cliente) throws Exception;
     String borrarCliente(int id);
+
+    boolean buscarIDCliente(int idcliente);
 }

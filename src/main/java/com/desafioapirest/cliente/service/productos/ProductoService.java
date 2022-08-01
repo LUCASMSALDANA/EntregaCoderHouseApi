@@ -1,7 +1,6 @@
 package com.desafioapirest.cliente.service.productos;
 
 import com.desafioapirest.cliente.model.Productos;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -15,4 +14,7 @@ public interface ProductoService {
     Productos actualizarProducto(Productos producto) throws Exception;
 
     String borrarProducto(int id);
+    boolean buscarIdProducto(int id);
+
+    float VerifCantidad(Integer idproducto, int cantidad) throws Exception;
 }

@@ -97,4 +97,16 @@ public class Venta {
     public void setIdcomprobante(Integer idcomprobante) {
         this.idcomprobante = idcomprobante;
     }
+
+    @Override
+    public String toString(){
+        return "idventa: "+this.idventa+
+                "\nidproducto: "+this.idproducto+
+                "\ncantidad: "+this.cantidad+
+                "\npreciototal "+this.preciototal+
+                "\nidcliente "+this.idcliente+
+                "\nidcomprobante "+this.idcomprobante;
+
+    }
+
 }

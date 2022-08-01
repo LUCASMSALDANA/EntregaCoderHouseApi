@@ -1,6 +1,5 @@
-package com.desafioapirest.cliente.model.controller;
+package com.desafioapirest.cliente.controller;
 
-import com.desafioapirest.cliente.exception.ApiException;
 import com.desafioapirest.cliente.model.Productos;
 import com.desafioapirest.cliente.service.productos.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,10 @@ public class ProductoController {
 
     @Autowired  // Aqui inyecto lo que va a ser mi clase de Service (Es decir donde estará la lógica de cada metodo que llame)
     ProductoService productoService;
+
+    //********************************************************************************************************************
+    //*********************************             GET MAPPINGS                   ***************************************
+    //********************************************************************************************************************
 
     @GetMapping("") //Mapeo como para dar instrucciones de lo que puede devolver este programita
     public String infoGetProductos(){

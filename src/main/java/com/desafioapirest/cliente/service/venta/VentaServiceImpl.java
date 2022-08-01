@@ -1,8 +1,12 @@
 package com.desafioapirest.cliente.service.venta;
 
 import com.desafioapirest.cliente.exception.ApiException;
+import com.desafioapirest.cliente.model.Clientes;
 import com.desafioapirest.cliente.model.Venta;
 import com.desafioapirest.cliente.repository.VentaRepository;
+import com.desafioapirest.cliente.service.clientes.ClienteService;
+import com.desafioapirest.cliente.service.comprobantes.ComprobanteService;
+import com.desafioapirest.cliente.service.productos.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +16,12 @@ import java.util.List;
 public class VentaServiceImpl implements VentaService {
     @Autowired
     VentaRepository ventaRepository;
+    @Autowired
+    ProductoService productoService;
+    @Autowired
+    ClienteService clienteService;
+    ComprobanteService comprobanteService;
+
 
     @Override
     public List<Venta> mostrarTodos() {
@@ -24,4 +34,31 @@ public class VentaServiceImpl implements VentaService {
         if(venta==null){throw new ApiException("No se encuentra la una venta con ese ID");}
         return venta;
     }
+
+    @Override
+    public Venta nuevaVenta(Venta nueva) throws Exception {
+        nueva.setIdventa(calcularID());
+        if(!clienteService.buscarIDCliente(nueva.getIdcliente())){
+            throw new ApiException("El ID Cliente no existe");
+        }
+        if(!productoService.buscarIdProducto(nueva.getIdproducto())){
+            throw new ApiException("El ID Producto no existe");
+        }
+        if(nueva.getCantidad()<1){throw new ApiException("La cantidad a comprar debe ser mayor a 0");}
+        nueva.setPreciototal(productoService.VerifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
+        System.out.println(nueva);
+        nueva.setIdcomprobante(1);
+        return ventaRepository.save(nueva);
+    }
+
+    //*********************************************************************************************************************
+    //*********************************                  METODOS                    ***************************************
+    //*********************************************************************************************************************
+
+
+    private int calcularID(){
+        return ventaRepository.findAll().size()+1;
+
+    }
+
 }

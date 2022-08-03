@@ -29,4 +29,5 @@ public interface ClienteService {
     boolean buscarIDCliente(int idcliente);
 
 
+    String getNombreApellido(int idcliente);
 }

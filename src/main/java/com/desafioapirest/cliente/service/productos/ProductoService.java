@@ -17,4 +17,6 @@ public interface ProductoService {
     boolean buscarIdProducto(int id);
 
     float VerifyModifCantidad(Integer idproducto, int cantidad) throws Exception;
+
+    String getDescripcion(Integer idproducto);
 }

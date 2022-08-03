@@ -132,6 +132,12 @@ public class ProductoServiceImpl implements ProductoService{
         throw new ApiException("Stock Insuficiente para la compra. El stock del producto :"+productoAMostrar.getDescripcion()+" es de : "+productoAMostrar.getStock());
     }
 
+    @Override
+    public String getDescripcion(Integer idproducto) {
+        productoAMostrar = productoRepository.findById(idproducto).orElse(null);
+        return productoAMostrar.getDescripcion();
+    }
+
 
     private boolean buscarCodigoRepetido(Productos producto){
         productoscopia=productoRepository.findAll();

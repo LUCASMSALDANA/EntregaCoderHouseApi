@@ -1,6 +1,7 @@
 package com.desafioapirest.cliente.service.comprobantes;
 
 import com.desafioapirest.cliente.model.Comprobante;
+import com.desafioapirest.cliente.model.Venta;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ public interface ComprobanteService {
 
     Comprobante mostrarByID(int id) throws Exception;
 
-    Integer calcularID();
+    int crearComprobante(Venta nueva);
 }

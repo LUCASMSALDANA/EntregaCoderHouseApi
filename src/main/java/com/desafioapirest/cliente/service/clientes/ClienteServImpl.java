@@ -148,6 +148,11 @@ public class ClienteServImpl implements ClienteService{
         return false;
     }
 
+    @Override
+    public String getNombreApellido(int idcliente) {
+        elementocliente = clientesRepository.findById(idcliente).orElse(null);
+        return elementocliente.getNombre()+" "+elementocliente.getApellido();
+    }
 
 
     //*********************************************************************************************************************

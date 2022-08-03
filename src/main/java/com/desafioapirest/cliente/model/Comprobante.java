@@ -13,6 +13,9 @@ public class Comprobante {
     @Column(name = "IDCOMPROBANTE")
     private Integer idcomprobante;
 
+    @Column(name = "IDVENTA")
+    private Integer idventa;
+
     @Column(name = "IDCLIENTE")
     private Integer idcliente;
 
@@ -32,7 +35,7 @@ public class Comprobante {
     private Date fecha;
 
       @Column(name="TOTAL")
-    private Integer total;
+    private Float total;
 
     //*********************
     //*   Constructores   *
@@ -41,8 +44,9 @@ public class Comprobante {
     public Comprobante() {
     }
 
-    public Comprobante(Integer idcomprobante, Integer idcliente, String nombreapellido, Integer idproducto, String descripcion, Integer cantidad, Date fecha, Integer total) {
+    public Comprobante(Integer idcomprobante, Integer idventa, Integer idcliente, String nombreapellido, Integer idproducto, String descripcion, Integer cantidad, Date fecha, Float total) {
         this.idcomprobante = idcomprobante;
+        this.idventa = idventa;
         this.idcliente = idcliente;
         this.nombreapellido = nombreapellido;
         this.idproducto = idproducto;
@@ -63,6 +67,14 @@ public class Comprobante {
 
     public void setIdcomprobante(Integer idcomprobante) {
         this.idcomprobante = idcomprobante;
+    }
+
+    public Integer getIdventa() {
+        return idventa;
+    }
+
+    public void setIdventa(Integer idventa) {
+        this.idventa = idventa;
     }
 
     public Integer getIdcliente() {
@@ -113,11 +125,24 @@ public class Comprobante {
         this.fecha = fecha;
     }
 
-    public Integer getTotal() {
+    public Float getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Float total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString(){
+        return  "idcomprobante : "+this.idcomprobante+
+                "\nidventa : "+this.idventa+
+                "\nidcliente : "+this.idcliente+
+                "\nnombreapellido : "+this.nombreapellido+
+                "\nidproducto : "+this.idproducto+
+                "\ndescirpcion : "+this.descripcion+
+                "\ncantidad : "+this.cantidad+
+                "\nfecha : "+this.fecha+
+                "\ntotal : "+this.total;
     }
 }

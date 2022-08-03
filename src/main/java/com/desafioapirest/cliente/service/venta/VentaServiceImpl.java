@@ -48,13 +48,13 @@ public class VentaServiceImpl implements VentaService {
         }
         if(nueva.getCantidad()<1){throw new ApiException("La cantidad a comprar debe ser mayor a 0");}
         nueva.setPreciototal(productoService.VerifyModifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
-        nueva.setIdcomprobante(comprobanteService.calcularID());
+        nueva.setIdcomprobante(comprobanteService.crearComprobante(nueva));
         return ventaRepository.save(nueva);
     }
 
-    //*********************************************************************************************************************
-    //*********************************                  METODOS                    ***************************************
-    //*********************************************************************************************************************
+    //****************************************************************************************************************
+    //*******************************                  METODOS                    ************************************
+    //****************************************************************************************************************
 
 
     private int calcularID(){

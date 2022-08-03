@@ -121,9 +121,12 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public float VerifCantidad(Integer idproducto, int cantidad) throws Exception{
+    public float VerifyModifCantidad(Integer idproducto, int cantidad) throws Exception{
         productoAMostrar = productoRepository.findById(idproducto).orElse(null);
         if(productoAMostrar.getStock()>=cantidad){
+            int stockNuevo= productoAMostrar.getStock()-cantidad;
+            productoAMostrar.setStock(stockNuevo);
+            productoRepository.save(productoAMostrar);
             return cantidad*productoAMostrar.getPrecio();
         }
         throw new ApiException("Stock Insuficiente para la compra. El stock del producto :"+productoAMostrar.getDescripcion()+" es de : "+productoAMostrar.getStock());

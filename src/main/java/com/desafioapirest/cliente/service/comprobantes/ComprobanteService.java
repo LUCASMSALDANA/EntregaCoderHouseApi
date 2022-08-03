@@ -8,4 +8,6 @@ public interface ComprobanteService {
     List<Comprobante> mostrarTodos();
 
     Comprobante mostrarByID(int id) throws Exception;
-    }
+
+    int calcularID();
+}

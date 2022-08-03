@@ -10,6 +10,7 @@ import com.desafioapirest.cliente.service.productos.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class VentaServiceImpl implements VentaService {
     ProductoService productoService;
     @Autowired
     ClienteService clienteService;
+    @Autowired
     ComprobanteService comprobanteService;
 
 
@@ -45,9 +47,9 @@ public class VentaServiceImpl implements VentaService {
             throw new ApiException("El ID Producto no existe");
         }
         if(nueva.getCantidad()<1){throw new ApiException("La cantidad a comprar debe ser mayor a 0");}
-        nueva.setPreciototal(productoService.VerifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
-        System.out.println(nueva);
-        nueva.setIdcomprobante(1);
+        nueva.setPreciototal(productoService.VerifyModifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
+        int idComprobante = comprobanteService.calcularID();
+        nueva.setIdcomprobante(idComprobante);
         return ventaRepository.save(nueva);
     }
 

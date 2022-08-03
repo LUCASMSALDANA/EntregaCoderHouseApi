@@ -87,10 +87,14 @@ public class ClienteController {
         ClientesDTO nuevoCliente = clienteService.actualizarCliente(cliente);
         return new ResponseEntity<>(nuevoCliente,HttpStatus.OK);
     }
-    //localhost:8080/borar/{id}
+
+    //*********************************************************************************************************************
+    //*********************************             DELETE MAPPINGS                   *************************************
+    //*********************************************************************************************************************
+
     @DeleteMapping("/borrar/{id}")
     public String borrarCliente(@PathVariable int id){
-      String texto =clienteService.borrarCliente(id);
-      return texto;
+        String texto =clienteService.borrarCliente(id);
+        return texto;
     }
 }

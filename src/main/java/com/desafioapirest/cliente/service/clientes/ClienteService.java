@@ -27,4 +27,6 @@ public interface ClienteService {
     String borrarCliente(int id);
 
     boolean buscarIDCliente(int idcliente);
+
+
 }

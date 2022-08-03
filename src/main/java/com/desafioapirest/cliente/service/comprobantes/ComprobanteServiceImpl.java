@@ -24,4 +24,9 @@ public class ComprobanteServiceImpl implements ComprobanteService{
         if(comprobante==null){throw new ApiException("No se encontro ningun comprobante con el ID :"+id);}
             return comprobante;
     }
+
+    @Override
+    public int calcularID() {
+        return comprobanteRepository.findAll().size()+1;
+    }
 }

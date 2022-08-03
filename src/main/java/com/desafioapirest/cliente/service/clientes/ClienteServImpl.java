@@ -32,8 +32,9 @@ public class ClienteServImpl implements ClienteService{
     String fechanacimientoString;
 
     //*********************************************************************************************************************
-    //*********************************             REST SERVICES                   ***************************************
+    //*********************************             GET SERVICES                   ***************************************
     //*********************************************************************************************************************
+
 
     @Override
     public List<Clientes> mostrarTodos() {
@@ -136,7 +137,7 @@ public class ClienteServImpl implements ClienteService{
         return texto;
     }
 
-    @Override
+
     public boolean buscarIDCliente(int idcliente) {
         clientescopia=clientesRepository.findAll();
         for(int i=0;i<clientescopia.size();i++){
@@ -146,6 +147,7 @@ public class ClienteServImpl implements ClienteService{
         }
         return false;
     }
+
 
 
     //*********************************************************************************************************************

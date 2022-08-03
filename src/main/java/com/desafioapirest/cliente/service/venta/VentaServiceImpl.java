@@ -48,8 +48,7 @@ public class VentaServiceImpl implements VentaService {
         }
         if(nueva.getCantidad()<1){throw new ApiException("La cantidad a comprar debe ser mayor a 0");}
         nueva.setPreciototal(productoService.VerifyModifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
-        int idComprobante = comprobanteService.calcularID();
-        nueva.setIdcomprobante(idComprobante);
+        nueva.setIdcomprobante(comprobanteService.calcularID());
         return ventaRepository.save(nueva);
     }
 

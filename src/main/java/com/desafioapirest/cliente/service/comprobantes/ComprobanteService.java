@@ -9,5 +9,5 @@ public interface ComprobanteService {
 
     Comprobante mostrarByID(int id) throws Exception;
 
-    int calcularID();
+    Integer calcularID();
 }

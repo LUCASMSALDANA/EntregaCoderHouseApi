@@ -124,8 +124,8 @@ public class ProductoServiceImpl implements ProductoService{
     public float VerifyModifCantidad(Integer idproducto, int cantidad) throws Exception{
         productoAMostrar = productoRepository.findById(idproducto).orElse(null);
         if(productoAMostrar.getStock()>=cantidad){
-            int stockNuevo= productoAMostrar.getStock()-cantidad;
-            productoAMostrar.setStock(stockNuevo);
+            int nuevoStock= productoAMostrar.getStock()-cantidad;
+            productoAMostrar.setStock(nuevoStock);
             productoRepository.save(productoAMostrar);
             return cantidad*productoAMostrar.getPrecio();
         }

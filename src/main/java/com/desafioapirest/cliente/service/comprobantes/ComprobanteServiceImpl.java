@@ -26,7 +26,9 @@ public class ComprobanteServiceImpl implements ComprobanteService{
     }
 
     @Override
-    public int calcularID() {
+    public Integer calcularID() {
         return comprobanteRepository.findAll().size()+1;
     }
+
+
 }

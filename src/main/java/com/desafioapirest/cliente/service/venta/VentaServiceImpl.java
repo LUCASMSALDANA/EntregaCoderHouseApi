@@ -24,6 +24,7 @@ public class VentaServiceImpl implements VentaService {
     @Autowired
     ComprobanteService comprobanteService;
 
+    List<Venta> ventascopia;
 
     @Override
     public List<Venta> mostrarTodos() {
@@ -67,6 +68,24 @@ public class VentaServiceImpl implements VentaService {
             nueva.setIdcomprobante(comprobanteService.crearComprobante(nueva));
             productoService.modifStock(nueva.getIdproducto(),nueva.getCantidad());
         return ventaRepository.save(nueva);
+    }
+
+    @Override
+    public String anularVenta(int id) {
+        ventascopia= ventaRepository.findAll();
+        String texto = "No se encontró ninguna venta con el id: "+id+", por lo tanto no se puede eliminar";
+        if(id<1){return texto;}
+        for(int i=0;i<ventascopia.size();i++){
+            if(id==ventascopia.get(i).getIdventa()) {
+                Venta ventaAanular= ventaRepository.findById(id).orElse(null);
+                productoService.devolucionStock(ventaAanular.getIdproducto(),ventaAanular.getCantidad());
+                comprobanteService.borrarComprobante(ventaAanular.getIdcomprobante());
+                ventaRepository.deleteById(id);
+                texto = "La venta con el id: " + id + " ha sido eliminada junto con el comprobante y se contabilizó la devolucion del producto.";
+                i=ventascopia.size();
+            }
+        }
+        return texto;
     }
 
 

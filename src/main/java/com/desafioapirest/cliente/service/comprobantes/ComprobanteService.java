@@ -11,4 +11,6 @@ public interface ComprobanteService {
     Comprobante mostrarByID(int id) throws Exception;
 
     int crearComprobante(Venta nueva);
+
+    void borrarComprobante(Integer idcomprobante);
 }

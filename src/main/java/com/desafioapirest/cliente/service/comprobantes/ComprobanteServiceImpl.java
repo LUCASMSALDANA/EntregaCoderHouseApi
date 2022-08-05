@@ -53,6 +53,12 @@ public class ComprobanteServiceImpl implements ComprobanteService{
         return idComprobante;
     }
 
+    @Override
+    public void borrarComprobante(Integer idcomprobante) {
+        comprobanteRepository.deleteById(idcomprobante);
+        return;
+    }
+
     private Date calcularFecha() {
         RestTemplate restTemplate = new RestTemplate();
         final String url = "http://worldclockapi.com/api/json/utc/now";

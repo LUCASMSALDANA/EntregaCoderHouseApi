@@ -21,4 +21,6 @@ public interface ProductoService {
     String getDescripcion(Integer idproducto);
 
     void modifStock(Integer idproducto, int cantidad);
+
+    void devolucionStock(Integer idproducto, int cantidad);
 }

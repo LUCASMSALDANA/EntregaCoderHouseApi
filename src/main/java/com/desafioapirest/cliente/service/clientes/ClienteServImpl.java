@@ -137,7 +137,11 @@ public class ClienteServImpl implements ClienteService{
         return texto;
     }
 
+    //*********************************************************************************************************************
+    //*********************************                  METODOS                    ***************************************
+    //*********************************************************************************************************************
 
+    @Override
     public boolean buscarIDCliente(int idcliente) {
         clientescopia=clientesRepository.findAll();
         for(int i=0;i<clientescopia.size();i++){
@@ -155,9 +159,6 @@ public class ClienteServImpl implements ClienteService{
     }
 
 
-    //*********************************************************************************************************************
-    //*********************************                  METODOS                    ***************************************
-    //*********************************************************************************************************************
     private int calcularEdad (Clientes cliente){  //Este va a ser el método que devuelva la edad
         fechanacimiento=cliente.getFechanacimiento(); // Guardo la fecha de nacimiento del cliente en una variable tipo Date
         fechanacimientoString=fechanacimiento.toString(); // Esa variable que guarde antes la convierto en String y la guardo en otra variable

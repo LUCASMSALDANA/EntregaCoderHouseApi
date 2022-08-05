@@ -144,6 +144,15 @@ public class ProductoServiceImpl implements ProductoService{
         return;
     }
 
+    @Override
+    public void devolucionStock(Integer idproducto, int cantidad) {
+        productoAMostrar = productoRepository.findById(idproducto).orElse(null);
+        int stockEntabla= productoAMostrar.getStock();
+        productoAMostrar.setStock(stockEntabla+cantidad);
+        productoRepository.save(productoAMostrar);
+        return;
+    }
+
 
     private boolean buscarCodigoRepetido(Productos producto){
         productoscopia=productoRepository.findAll();

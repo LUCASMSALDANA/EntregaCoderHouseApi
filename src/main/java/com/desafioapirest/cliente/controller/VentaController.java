@@ -45,10 +45,19 @@ public class VentaController {
     //*********************************************************************************************************************
     //*********************************             POST MAPPINGS                   ***************************************
     //*********************************************************************************************************************
-    //localhost:8080/ventas/nueva
+
     @PostMapping("/nueva")
     public ResponseEntity<Object> nuevaVenta(@RequestBody Venta nueva)throws Exception{
         Venta ventaOk= ventaService.nuevaVenta(nueva);
         return new ResponseEntity<>(ventaOk, HttpStatus.CREATED);
+    }
+
+    //*********************************************************************************************************************
+    //*********************************             DELETE MAPPINGS                   *************************************
+    //*********************************************************************************************************************
+    @DeleteMapping("/borrar/{id}")
+    public String anularVenta(@PathVariable int id){
+        String texto = ventaService.anularVenta(id);
+        return texto;
     }
 }

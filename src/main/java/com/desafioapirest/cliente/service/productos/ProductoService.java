@@ -16,7 +16,9 @@ public interface ProductoService {
     String borrarProducto(int id);
     boolean buscarIdProducto(int id);
 
-    float VerifyModifCantidad(Integer idproducto, int cantidad) throws Exception;
+    float VerifCantidad(Integer idproducto, int cantidad) throws Exception;
 
     String getDescripcion(Integer idproducto);
+
+    void modifCantidad(Integer idproducto, int cantidad);
 }

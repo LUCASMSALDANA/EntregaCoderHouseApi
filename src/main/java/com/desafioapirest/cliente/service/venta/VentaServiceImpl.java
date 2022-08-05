@@ -47,8 +47,9 @@ public class VentaServiceImpl implements VentaService {
             throw new ApiException("El ID Producto no existe");
         }
         if(nueva.getCantidad()<1){throw new ApiException("La cantidad a comprar debe ser mayor a 0");}
-        nueva.setPreciototal(productoService.VerifyModifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
+        nueva.setPreciototal(productoService.VerifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
         nueva.setIdcomprobante(comprobanteService.crearComprobante(nueva));
+        productoService.modifCantidad(nueva.getIdproducto(),nueva.getCantidad());
         return ventaRepository.save(nueva);
     }
 

@@ -46,8 +46,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
         Integer idProducto = nueva.getIdproducto();
         String descripcionProducto = productoService.getDescripcion(nueva.getIdproducto());
         Integer cantidad = nueva.getCantidad();
-       // Date hoy = calcularFecha();
-        Date hoy = Date.valueOf(LocalDate.now());
+        Date hoy = calcularFecha();
         float total = nueva.getPreciototal();
         Comprobante nuevoComprobante = new Comprobante(idComprobante,idVenta,idCliente,nombreApellido,idProducto,descripcionProducto,cantidad,hoy,total);
         comprobanteRepository.save(nuevoComprobante);

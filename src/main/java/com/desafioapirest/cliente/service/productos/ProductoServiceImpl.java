@@ -121,12 +121,12 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public float VerifCantidad(Integer idproducto, int cantidad) throws Exception{
+    public String VerifCantidad(Integer idproducto, int cantidad) throws Exception{
         productoAMostrar = productoRepository.findById(idproducto).orElse(null);
         if(productoAMostrar.getStock()>=cantidad){
-            return cantidad*productoAMostrar.getPrecio();
+            return String.valueOf(cantidad*productoAMostrar.getPrecio());
         }
-        throw new ApiException("Stock Insuficiente para la compra. El stock del producto :"+productoAMostrar.getDescripcion()+" es de : "+productoAMostrar.getStock());
+        return "Stock Insuficiente para la compra. El stock del producto :"+productoAMostrar.getDescripcion()+" es de : "+productoAMostrar.getStock();
     }
 
     @Override
@@ -136,7 +136,7 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public void modifCantidad(Integer idproducto, int cantidad) {
+    public void modifStock(Integer idproducto, int cantidad) {
         productoAMostrar = productoRepository.findById(idproducto).orElse(null);
         int nuevoStock= productoAMostrar.getStock()-cantidad;
         productoAMostrar.setStock(nuevoStock);

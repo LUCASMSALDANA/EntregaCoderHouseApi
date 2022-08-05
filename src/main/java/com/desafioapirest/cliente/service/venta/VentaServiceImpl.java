@@ -39,19 +39,36 @@ public class VentaServiceImpl implements VentaService {
 
     @Override
     public Venta nuevaVenta(Venta nueva) throws Exception {
+        List<String> error= new ArrayList<>();
+        String stockInsuficiente ="";
+        int pos=0;
         nueva.setIdventa(calcularID());
         if(!clienteService.buscarIDCliente(nueva.getIdcliente())){
-            throw new ApiException("El ID Cliente no existe");
+            error.add("El ID Cliente no existe");
+            pos++;
         }
         if(!productoService.buscarIdProducto(nueva.getIdproducto())){
             throw new ApiException("El ID Producto no existe");
         }
-        if(nueva.getCantidad()<1){throw new ApiException("La cantidad a comprar debe ser mayor a 0");}
-        nueva.setPreciototal(productoService.VerifCantidad(nueva.getIdproducto(),nueva.getCantidad()));
-        nueva.setIdcomprobante(comprobanteService.crearComprobante(nueva));
-        productoService.modifCantidad(nueva.getIdproducto(),nueva.getCantidad());
+        if(nueva.getCantidad()<1) {
+            error.add("La cantidad a comprar debe ser mayor a 0");
+            pos++;
+        }else {
+            stockInsuficiente = productoService.VerifCantidad(nueva.getIdproducto(), nueva.getCantidad());
+            if (stockInsuficiente.contains("Stock Insuficiente")) {
+                error.add(stockInsuficiente);
+            }
+        }
+            if(!error.isEmpty()){
+                String textoError= armarTextoError(error);
+                throw  new ApiException(textoError);
+            }
+            nueva.setPreciototal(Float.valueOf(stockInsuficiente));
+            nueva.setIdcomprobante(comprobanteService.crearComprobante(nueva));
+            productoService.modifStock(nueva.getIdproducto(),nueva.getCantidad());
         return ventaRepository.save(nueva);
     }
+
 
     //****************************************************************************************************************
     //*******************************                  METODOS                    ************************************
@@ -62,5 +79,14 @@ public class VentaServiceImpl implements VentaService {
         return ventaRepository.findAll().size()+1;
 
     }
+
+    private String armarTextoError(List<String> error) {
+        String textoError="";
+        for(String err: error){
+            textoError+=err+". ";
+        }
+        return textoError;
+    }
+
 
 }

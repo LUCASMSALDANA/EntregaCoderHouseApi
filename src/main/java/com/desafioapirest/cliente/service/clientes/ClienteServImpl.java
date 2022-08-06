@@ -110,6 +110,7 @@ public class ClienteServImpl implements ClienteService{
         clientescopia = clientesRepository.findAll();
         finalLista = clientescopia.size();
         if(cliente.getIdcliente()<=finalLista && cliente.getIdcliente()>0){  //Si el IDCliente existe en la base de datos , entonces puedo actualizar;
+            if(buscarDniRepetido(cliente)){throw new ApiException("No se puede actualizar, ya que el DNI ingresado pertenece a otro cliente en nuestra base de datos");}
             clientesRepository.save(cliente);
             edad=calcularEdad(cliente);
             amostrar = new ClientesDTO(cliente.getIdcliente(), cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
@@ -169,7 +170,7 @@ public class ClienteServImpl implements ClienteService{
         return edad;
     }
 
-    private boolean buscarDniRepetido(Clientes cliente){  //Este metodo chequea que el DNI no se encuentre en la base de datos, si lo encuentra devuelve el ID del cliente con ese dni. Si el dni no se repite me devuelve 0
+    private boolean buscarDniRepetido(Clientes cliente){  //Este metodo chequea que el DNI no se encuentre en la base de datos, si lo encuentra devuelve True con ese dni. Si el dni no se repite me devuelve false
         clientescopia=clientesRepository.findAll();
         for(int i=0;i<clientescopia.size();i++){
             elementocliente=clientescopia.get(i);

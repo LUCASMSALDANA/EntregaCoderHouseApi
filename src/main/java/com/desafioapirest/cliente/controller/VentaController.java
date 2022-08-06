@@ -46,6 +46,17 @@ public class VentaController {
     //*********************************             POST MAPPINGS                   ***************************************
     //*********************************************************************************************************************
 
+    @PostMapping("")
+    public String infoPostVenta(){
+        return "BIENVENIDO AL SISTEMA POST DE VENTAS \n" +
+                "*********************************************\n" +
+                "Uri's y sus funciones:\n" +
+                "\n[localhost:8080/ventas/nueva/ : Podrá realizar una nueva venta \n" +
+                "\n\n*** IMPORTANTE ***"+
+                "\nLos unicos requisitos para crear una venta es pasar el ID Producto, Cantidad y el ID Cliente"+
+                "\nEl comprobante se genera automaticamente, al hacer la venta";
+    }
+
     @PostMapping("/nueva")
     public ResponseEntity<Object> nuevaVenta(@RequestBody Venta nueva)throws Exception{
         Venta ventaOk= ventaService.nuevaVenta(nueva);

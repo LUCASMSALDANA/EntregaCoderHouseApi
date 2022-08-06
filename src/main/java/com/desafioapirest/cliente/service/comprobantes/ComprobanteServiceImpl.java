@@ -56,7 +56,7 @@ public class ComprobanteServiceImpl implements ComprobanteService{
     @Override
     public void borrarComprobante(Integer idcomprobante) {
         comprobanteRepository.deleteById(idcomprobante);
-        return;
+        return ;
     }
 
     private Date calcularFecha() {

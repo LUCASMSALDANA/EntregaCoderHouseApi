@@ -67,7 +67,7 @@ public class VentaController {
     //*********************************             DELETE MAPPINGS                   *************************************
     //*********************************************************************************************************************
     @DeleteMapping("/borrar/{id}")
-    public String anularVenta(@PathVariable int id){
+    public String anularVenta(@PathVariable int id) throws Exception{
         String texto = ventaService.anularVenta(id);
         return texto;
     }

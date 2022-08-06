@@ -13,5 +13,5 @@ public interface VentaService {
 
     Venta nuevaVenta(Venta nueva) throws Exception;
 
-    String anularVenta(int id);
+    String anularVenta(int id) throws Exception;
 }

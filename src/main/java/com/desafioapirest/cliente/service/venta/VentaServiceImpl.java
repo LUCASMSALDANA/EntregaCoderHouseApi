@@ -71,21 +71,17 @@ public class VentaServiceImpl implements VentaService {
     }
 
     @Override
-    public String anularVenta(int id) {
+    public String anularVenta(int id) throws Exception {
         ventascopia= ventaRepository.findAll();
-        String texto = "No se encontró ninguna venta con el id: "+id+", por lo tanto no se puede eliminar";
-        if(id<1){return texto;}
-        for(int i=0;i<ventascopia.size();i++){
-            if(id==ventascopia.get(i).getIdventa()) {
-                Venta ventaAanular= ventaRepository.findById(id).orElse(null);
-                productoService.devolucionStock(ventaAanular.getIdproducto(),ventaAanular.getCantidad());
-                comprobanteService.borrarComprobante(ventaAanular.getIdcomprobante());
-                ventaRepository.deleteById(id);
-                texto = "La venta con el id: " + id + " ha sido eliminada junto con el comprobante y se contabilizó la devolucion del producto.";
-                i=ventascopia.size();
-            }
+        if(id<1){throw new ApiException("EL ID debe ser 1 o más");}
+        Venta ventaAanular= ventaRepository.findById(id).orElse(null);
+        if(ventaAanular==null){
+            throw new ApiException("No se encontró la venta con el ID: "+id);
         }
-        return texto;
+        productoService.devolucionStock(ventaAanular.getIdproducto(),ventaAanular.getCantidad());
+        comprobanteService.borrarComprobante(ventaAanular.getIdcomprobante());
+        ventaRepository.deleteById(id);
+        return "La venta con el id: " + id + " ha sido eliminada junto con el comprobante y se contabilizó la devolucion del producto.";
     }
 
 

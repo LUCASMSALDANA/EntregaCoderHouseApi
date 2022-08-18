@@ -110,13 +110,9 @@ public class ProductoServiceImpl implements ProductoService{
     //*********************************************************************************************************************
 
     public boolean buscarIdProducto(int id){
-        productoscopia=productoRepository.findAll();
-        for(int i=0;i<productoscopia.size();i++){
-            if(productoscopia.get(i).getIdproducto()==id) {
-                return true;
-            }
-        }
-        return false;
+        productoAMostrar=productoRepository.findById(id).orElse(null);
+        if(productoAMostrar==null){return false;}
+        return true;
     }
 
     @Override

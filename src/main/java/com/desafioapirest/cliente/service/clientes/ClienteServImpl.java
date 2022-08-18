@@ -125,16 +125,11 @@ public class ClienteServImpl implements ClienteService{
 
     @Override
     public String borrarCliente(int id) {
-        clientescopia= clientesRepository.findAll();
         String texto = "No se encontró el cliente con el id: "+id+", por lo tanto no se puede eliminar";
-        if(id<1){return texto;}
-        for(int i=0;i<clientescopia.size();i++){
-            if(id==clientescopia.get(i).getIdcliente()) {
-                clientesRepository.deleteById(id);
-                texto = "El cliente con el id: " + id + " ha sido eliminiado";
-                i=clientescopia.size();
-            }
-        }
+        elementocliente=clientesRepository.findById(id).orElse(null);
+        if (elementocliente==null){return texto;}
+             clientesRepository.deleteById(id);
+             texto = "El cliente con el id: " + id + " ha sido eliminiado";
         return texto;
     }
 
@@ -144,13 +139,9 @@ public class ClienteServImpl implements ClienteService{
 
     @Override
     public boolean buscarIDCliente(int idcliente) {
-        clientescopia=clientesRepository.findAll();
-        for(int i=0;i<clientescopia.size();i++){
-            if(clientescopia.get(i).getIdcliente()==idcliente) {
-                return true;
-            }
-        }
-        return false;
+        elementocliente = clientesRepository.findById(idcliente).orElse(null);
+        if(elementocliente==null){return false;}
+        return true;
     }
 
     @Override

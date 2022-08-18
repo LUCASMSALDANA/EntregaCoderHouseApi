@@ -64,8 +64,9 @@ public class ComprobanteServiceImpl implements ComprobanteService{
         final String url = "http://worldclockapi.com/api/json/utc/now";
         try {
             String jSon = restTemplate.getForObject(url, String.class);
-            return Date.valueOf(jSon.substring(30,40));
-        }catch (Exception e){return Date.valueOf(LocalDate.now());}
+            return Date.valueOf(jSon.substring(30, 40));
+        }catch(Exception e){return Date.valueOf(LocalDate.now());}
+
     }
 
 

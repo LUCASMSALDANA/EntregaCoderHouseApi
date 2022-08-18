@@ -81,13 +81,12 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     public Productos actualizarProducto(Productos producto) throws Exception {
-        int idfinal = productoRepository.findAll().size();
-        if(producto.getIdproducto()<=idfinal && producto.getIdproducto()>0){
-            producto.setCodigo(producto.getCodigo().toUpperCase());
-            productoRepository.save(producto);
-            return producto;
-        }
-        throw new ApiException("El ID de Producto no existe");
+        Productos productoAmodif = productoRepository.findById(producto.getIdproducto()).orElse(null);
+        if(productoAmodif==null){throw new ApiException("El ID de Producto no existe");}
+        producto.setCodigo(producto.getCodigo().toUpperCase());
+        productoRepository.save(producto);
+        return producto;
+
     }
 
     //*******************************************************************************************************************

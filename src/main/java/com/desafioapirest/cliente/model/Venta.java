@@ -1,9 +1,6 @@
 package com.desafioapirest.cliente.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="VENTA")
@@ -13,6 +10,7 @@ public class Venta {
     private Integer idventa;
 
     @Column(name = "IDPRODUCTO")
+    @OneToMany
     private Integer idproducto;
 
     @Column(name = "CANTIDAD")

@@ -107,16 +107,13 @@ public class ClienteServImpl implements ClienteService{
 
     @Override
     public ClientesDTO actualizarCliente(Clientes cliente) throws Exception{
-        clientescopia = clientesRepository.findAll();
-        finalLista = clientescopia.size();
-        if(cliente.getIdcliente()<=finalLista && cliente.getIdcliente()>0){  //Si el IDCliente existe en la base de datos , entonces puedo actualizar;
-            if(buscarDniRepetido(cliente)){throw new ApiException("No se puede actualizar, ya que el DNI ingresado pertenece a otro cliente en nuestra base de datos");}
-            clientesRepository.save(cliente);
-            edad=calcularEdad(cliente);
-            amostrar = new ClientesDTO(cliente.getIdcliente(), cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
-          return amostrar;
-        }
-        throw new ApiException("El ID de Cliente no existe");
+        Clientes clienteAModif = clientesRepository.findById(cliente.getIdcliente()).orElse(null);
+        if(clienteAModif==null){throw new ApiException("El ID de Cliente no existe");}
+        if(buscarDniRepetido(cliente)){throw new ApiException("No se puede actualizar, ya que el DNI ingresado pertenece a otro cliente en nuestra base de datos");}
+        clientesRepository.save(cliente);
+        edad=calcularEdad(cliente);
+        amostrar = new ClientesDTO(cliente.getIdcliente(), cliente.getDni(), cliente.getNombre(), cliente.getApellido(), edad);
+        return amostrar;
     }
 
     //*******************************************************************************************************************
@@ -128,8 +125,8 @@ public class ClienteServImpl implements ClienteService{
         String texto = "No se encontró el cliente con el id: "+id+", por lo tanto no se puede eliminar";
         elementocliente=clientesRepository.findById(id).orElse(null);
         if (elementocliente==null){return texto;}
-             clientesRepository.deleteById(id);
-             texto = "El cliente con el id: " + id + " ha sido eliminiado";
+        clientesRepository.deleteById(id);
+        texto = "El cliente con el id: " + id + " ha sido eliminiado";
         return texto;
     }
 

@@ -10,7 +10,6 @@ public class Venta {
     private Integer idventa;
 
     @Column(name = "IDPRODUCTO")
-    @OneToMany
     private Integer idproducto;
 
     @Column(name = "CANTIDAD")
